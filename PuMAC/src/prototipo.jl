@@ -21,7 +21,7 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
 #count = int cantidad de archivos
 #arreglo[] = Dataframes que contienen los archivos
 
-    for i in 1:count, for j in names(arreglo[count])
+    for i in 1:count, for j in names(arreglo[i])
         #quitar columnas no requeridas, los nombres
         #de las columnas estan en un arreglo
         #llamado "columnas" de tipo string
