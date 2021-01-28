@@ -3,7 +3,7 @@ using DataFrames
 
 function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
     #Extraer la informacion de los archivos
-    count = 1
+    count = 0
     arreglo::Array{undef,undef}
     tamanio = 0
 
@@ -25,6 +25,7 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
         #quitar columnas no requeridas, los nombres
         #de las columnas estan en un arreglo
         #llamado "columnas" de tipo string
+        #push!()
     end
 
 
