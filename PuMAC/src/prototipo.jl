@@ -17,24 +17,23 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
 
 #quitar columnas no requeridas de los dataframes
 
-
-#count = int cantidad de archivos
 #arreglo[] = Dataframes que contienen los archivos
 
-    for i in 1:count, for j in names(arreglo[i])
+    for i in 1:size(archivos,1), for j in names(arreglo[i]), for k in columnas
         #quitar columnas no requeridas, los nombres
         #de las columnas estan en un arreglo
         #llamado "columnas" de tipo string
-        #if(columnas[]!=j)
-        #push!()
+        if(j!=k)
+             arreglo[i] = select!(arreglo[i], Not(:j))   
+        end
     end
 
 
-    for i in 1:count#, for j in 1:tamanio
+    for i in 1:size(archivos,1)#, for j in 1:tamanio
         if nrow(arreglo[i]) < tamanio
 #crar un dataframe con numero de filas del tamaño de nrow(arreglo[i])-tamanio
 # e insertarlo abajo de arreglo[i]
-            arreglo[count] =
+            arreglo[i] =
         end
     end
 
