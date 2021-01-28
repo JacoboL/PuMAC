@@ -25,6 +25,7 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
         #quitar columnas no requeridas, los nombres
         #de las columnas estan en un arreglo
         #llamado "columnas" de tipo string
+        #if(columnas[]!=j)
         #push!()
     end
 
