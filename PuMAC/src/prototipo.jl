@@ -19,12 +19,12 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
 
 #arreglo[] = Dataframes que contienen los archivos
 
-    for i in 1:size(archivos,1), for j in names(arreglo[i]), for k in columnas
+    for i in 1:size(archivos,1), j in names(arreglo[i]), k in columnas
         #quitar columnas no requeridas, los nombres
         #de las columnas estan en un arreglo
         #llamado "columnas" de tipo string
         if(j!=k)
-             arreglo[i] = select!(arreglo[i], Not(:j))   
+             arreglo[i] = select(arreglo[i], Symbol(j))   
         end
     end
 
