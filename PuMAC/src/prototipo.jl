@@ -1,10 +1,10 @@
 using CSV
 using DataFrames
 
-function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
+function files_missing_csv(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
     #Extraer la informacion de los archivos
     count = 0
-    arreglo::Array{undef,undef}
+    arreglo = Array{DataFrame}(undef,size(archivos,1)
     tamanio = 0
 
     for i in archivos
@@ -23,8 +23,9 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
         #quitar columnas no requeridas, los nombres
         #de las columnas estan en un arreglo
         #llamado "columnas" de tipo string
-        if(j!=k)
+        if(j==k)
              arreglo[i] = select(arreglo[i], Symbol(j))   
+             arreglo[i] = select!(arreglo[i], Not(Symbol(j)))   
         end
     end
 
@@ -33,10 +34,31 @@ function recolector(archivos::Array{String,undef}, columnas::Array{String,undef}
         if nrow(arreglo[i]) < tamanio
 #crar un dataframe con numero de filas del tamaño de nrow(arreglo[i])-tamanio
 # e insertarlo abajo de arreglo[i]
-            arreglo[i] =
+            arreglo[i] = push!(arreglo[i],#columnas de missing#)
         end
     end
 
     #Crear un archivo csv con el dataframe
     CSV.write(ruta ,df)
+end
+
+function files_zero_jld(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
+end
+
+function files_zero_csv(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
+end
+
+function files_missing_jld(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
+end
+
+function directory_zero_csv(archivos::String, columnas::Array{String,undef}, ruta::String)
+end
+
+function directory_missing_jld(archivos::String, columnas::Array{String,undef}, ruta::String)
+end
+
+function directory_missing_csv(archivos::String, columnas::Array{String,undef}, ruta::String)
+end
+
+function directory_zero_jld(archivos::String, columnas::Array{String,undef}, ruta::String)
 end
