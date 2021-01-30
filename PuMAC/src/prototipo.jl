@@ -1,7 +1,7 @@
 using CSV
 using DataFrames
 
-function files_missing_csv(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
+function files_missing_csv(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String = homedir())
     #Extraer la informacion de los archivos
     count = 0
     arreglo = Array{DataFrame}(undef,size(archivos,1)
