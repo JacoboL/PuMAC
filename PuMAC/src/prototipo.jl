@@ -7,6 +7,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     count = 0
     arreglo = Array{DataFrame}(undef,size(archivos,1)
     tamanio = 0
+        nuevo_dataframe = DataFrame()
 
     for i in archivos
         arreglo[count] = DataFrame(CSV.File(i))
@@ -42,12 +43,12 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     end
     
     for i in 1:size(archivos,1)#, for j in 1:tamanio
-       nuevo_dataframe = nuevo_dataframe + arreglo[i]
+       nuevo_dataframe = hcat(nuevo_dataframe, arreglo[i], makeunique=true)
     end
 
     #Crear un archivo csv con el dataframe
     if(lowercase(exportto) == "csv")
-        CSV.write(ruta ,df)
+        CSV.write(ruta ,nuevo_dataframe)
     else  if(lowercase(exportto) == "jld")
         #exportar a jld
     else
