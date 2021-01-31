@@ -25,6 +25,8 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
         #llamado "columnas" de tipo string
         if(j==k)
              arreglo[i] = select(arreglo[i], Symbol(j))   
+        end
+        if(j!=k)
              arreglo[i] = select!(arreglo[i], Not(Symbol(j)))   
         end
     end
