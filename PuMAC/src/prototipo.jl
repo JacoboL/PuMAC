@@ -60,5 +60,6 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     return nevo_dataframe
 end
 
-function con_carpeta(archivos::String, columnas::Array{String,undef}, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
+function con_carpeta(carpeta::String, columnas::Array{String,undef}, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
+    archivos = readdir(carpeta)
 end
