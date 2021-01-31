@@ -27,7 +27,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
              arreglo[i] = select(arreglo[i], Symbol(j))   
         end
         if(j!=k)
-             arreglo[i] = select!(arreglo[i], Not(Symbol(j)))   
+             select!(arreglo[i], Not(Symbol(j)))   
         end
     end
 
