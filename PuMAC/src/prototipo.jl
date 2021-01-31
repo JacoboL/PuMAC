@@ -1,7 +1,7 @@
 using CSV
 using DataFrames
 
-function files_missing_csv(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String = homedir())
+function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
     #Extraer la informacion de los archivos
     count = 0
     arreglo = Array{DataFrame}(undef,size(archivos,1)
@@ -39,26 +39,15 @@ function files_missing_csv(archivos::Array{String,undef}, columnas::Array{String
     end
 
     #Crear un archivo csv con el dataframe
-    CSV.write(ruta ,df)
+    if(exportto == "csv")
+        CSV.write(ruta ,df)
+    end
+    else  if(exportto == "jld")
+        CSV.write(ruta ,df)
+    end
+    
+    return nevo_dataframe
 end
 
-function files_zero_jld(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
-end
-
-function files_zero_csv(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
-end
-
-function files_missing_jld(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String)
-end
-
-function directory_zero_csv(archivos::String, columnas::Array{String,undef}, ruta::String)
-end
-
-function directory_missing_jld(archivos::String, columnas::Array{String,undef}, ruta::String)
-end
-
-function directory_missing_csv(archivos::String, columnas::Array{String,undef}, ruta::String)
-end
-
-function directory_zero_jld(archivos::String, columnas::Array{String,undef}, ruta::String)
+function con_carpeta(archivos::String, columnas::Array{String,undef}, ruta::String)
 end
