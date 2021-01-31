@@ -45,10 +45,10 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     end
 
     #Crear un archivo csv con el dataframe
-    if(exportto == "csv")
+    if(lowercase(exportto) == "csv")
         CSV.write(ruta ,df)
-    else  if(exportto == "jld")
-        CSV.write(ruta ,df)
+    else  if(lowercase(exportto) == "jld")
+        #exportar a jld
     else
         println("no se puede exportar al tipo de archivo $exportto")
     end
