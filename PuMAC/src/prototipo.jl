@@ -2,7 +2,7 @@ using CSV
 using DataFrames
 using JLD
 
-function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
+function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_ruta::String, exportto::String = "csv", faltantes::Bool = true)
     #Extraer la informacion de los archivos
     count = 0
     arreglo = Array{DataFrame}(undef,size(archivos,1)
@@ -48,7 +48,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
 
     #Crear un archivo csv con el dataframe
     if(lowercase(exportto) == "csv")
-        CSV.write(ruta ,nuevo_dataframe)
+        CSV.write( joinpath(homedir(), ruta) ,nuevo_dataframe)
     else  if(lowercase(exportto) == "jld")
         #exportar a jld
     else
