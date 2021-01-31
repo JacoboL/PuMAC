@@ -38,7 +38,9 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
         if nrow(arreglo[i]) < tamanio
 #crar un dataframe con numero de filas del tamaño de nrow(arreglo[i])-tamanio
 # e insertarlo abajo de arreglo[i]
-            arreglo[i] = push!(arreglo[i],#columnas de missing#)
+            #arreglo[i] = push!(arreglo[i],#columnas de missing#)
+            missing_dataframe = DataFrame(arreglo[i], nrow(arreglo[i])-tamanio)
+            append!(arreglo[i], missing_dataframe)
         end
     end
     
