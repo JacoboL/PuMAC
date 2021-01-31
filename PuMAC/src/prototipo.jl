@@ -42,7 +42,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
         end
     end
     
-    for i in 1:size(archivos,1)#, for j in 1:tamanio
+    for i in 1:size(archivos,1)
        nuevo_dataframe = hcat(nuevo_dataframe, arreglo[i], makeunique=true)
     end
 
