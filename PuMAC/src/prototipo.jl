@@ -1,5 +1,6 @@
 using CSV
 using DataFrames
+using JLD
 
 function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
     #Extraer la informacion de los archivos
