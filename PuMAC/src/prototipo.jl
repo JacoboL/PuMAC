@@ -37,14 +37,20 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
             arreglo[i] = push!(arreglo[i],#columnas de missing#)
         end
     end
+    
+    for i in 1:size(archivos,1)#, for j in 1:tamanio
+       nuevo_dataframe = nuevo_dataframe + arreglo[i]
+    end
 
     #Crear un archivo csv con el dataframe
     if(exportto == "csv")
         CSV.write(ruta ,df)
-    end
     else  if(exportto == "jld")
         CSV.write(ruta ,df)
+    else
+        println("no se puede exportar al tipo de archivo $exportto")
     end
+      
     
     return nevo_dataframe
 end
