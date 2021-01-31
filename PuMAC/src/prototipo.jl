@@ -48,7 +48,8 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
 
     #Crear un archivo csv con el dataframe
     if(lowercase(exportto) == "csv")
-        CSV.write( joinpath(homedir(), ruta) ,nuevo_dataframe)
+        CSV.write( joinpath(homedir(), nombre_ruta) ,nuevo_dataframe)
+        println("el archivo se guardo en", joinpath(homedir(), nombre_ruta))
     else  if(lowercase(exportto) == "jld")
         #exportar a jld
     else
