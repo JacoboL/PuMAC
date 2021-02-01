@@ -34,12 +34,10 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     end
 
 
-    for i in 1:size(archivos,1)#, for j in 1:tamanio
+    for i in 1:size(archivos,1)
         if nrow(arreglo[i]) < tamanio
-#crar un dataframe con numero de filas del tamaño de nrow(arreglo[i])-tamanio
-# e insertarlo abajo de arreglo[i]
-            #arreglo[i] = push!(arreglo[i],#columnas de missing#)
-            missing_dataframe = similar(arreglo[i], nrow(arreglo[i])-tamanio)
+            missing_dataframe = similar(arreglo[i], tamanio-nrow(arreglo[i]))
+            allowmissing!(missing_dataframe)
             append!(arreglo[i], missing_dataframe)
         end
     end
