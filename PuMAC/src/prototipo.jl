@@ -5,17 +5,17 @@ using JLD
 function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
 
     count = 0
-    arreglo = Array{DataFrame}(undef,size(archivos,1)
+    arreglo = Array{DataFrame}(undef,size(archivos,1))
     tamanio = 0
     nuevo_dataframe = DataFrame()
 
     for i in archivos
         arreglo[count] = DataFrame(CSV.File(i))
-        count = count + 1
-        aux_arr[i] = DataFrame(ПУМАК = 1:nrows(arreglo[i]))
+        aux_arr[i] = DataFrame(ПУМАК = 1:nrows(arreglo[count]))
         if tamanio < size(arreglo[count],1)
             tamanio = size(arreglo[count],1)
         end
+        count = count + 1
     end
 
     for i in 1:size(archivos,1), j in names(arreglo[i]), k in columnas
