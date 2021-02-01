@@ -2,7 +2,7 @@ using CSV
 using DataFrames
 using JLD
 
-function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
+function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
     #Extraer la informacion de los archivos
     count = 0
     arreglo = Array{DataFrame}(undef,size(archivos,1)
@@ -62,7 +62,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     return nevo_dataframe
 end
 
-function con_carpeta(carpeta::String, columnas::Array{String,undef}, nombre_archivo::String, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
-    pwd(carpeta)
+function con_carpeta(carpeta::String, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
+    cd(carpeta)
     archivos = filter(x->endswith(x, ".csv"), readdir())
 end
