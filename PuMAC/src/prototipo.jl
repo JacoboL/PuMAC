@@ -37,7 +37,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     for i in 1:size(archivos,1)
         if nrow(arreglo[i]) < tamanio
             missing_dataframe = similar(arreglo[i], tamanio-nrow(arreglo[i]))
-            allowmissing!(missing_dataframe)
+            #nuevos valores a missing
             append!(arreglo[i], missing_dataframe)
         end
     end
@@ -61,5 +61,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
 end
 
 function con_carpeta(carpeta::String, columnas::Array{String,undef}, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
-    archivos = readdir(carpeta)
+    pwd(carpeta)
+    if(.csv)
+    archivos = readdir()
 end
