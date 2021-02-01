@@ -55,7 +55,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     else  if(lowercase(exportto) == "jld")
         #exportar a jld
     else
-        println("no se puede exportar al tipo de archivo $exportto")
+        error("no se puede exportar al tipo de archivo $exportto")
     end
       
     
