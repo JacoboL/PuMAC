@@ -3,11 +3,11 @@ using DataFrames
 using JLD
 
 function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
-    #Extraer la informacion de los archivos
+
     count = 0
     arreglo = Array{DataFrame}(undef,size(archivos,1)
     tamanio = 0
-        nuevo_dataframe = DataFrame()
+    nuevo_dataframe = DataFrame()
 
     for i in archivos
         arreglo[count] = DataFrame(CSV.File(i))
@@ -17,14 +17,8 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
         end
     end
 
-#quitar columnas no requeridas de los dataframes
-
-#arreglo[] = Dataframes que contienen los archivos
-
     for i in 1:size(archivos,1), j in names(arreglo[i]), k in columnas
-        #quitar columnas no requeridas, los nombres
-        #de las columnas estan en un arreglo
-        #llamado "columnas" de tipo string
+            
         if(j==k)
              arreglo[i] = select(arreglo[i], Symbol(j))   
         end
@@ -46,7 +40,6 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
        nuevo_dataframe = hcat(nuevo_dataframe, arreglo[i], makeunique=true)
     end
 
-    #Crear un archivo csv con el dataframe
     if(lowercase(exportto) == "csv")
         
         CSV.write(nombre_archivo ,nuevo_dataframe)
