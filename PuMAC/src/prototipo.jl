@@ -12,19 +12,20 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
     for i in archivos
         arreglo[count] = DataFrame(CSV.File(i))
         count = count + 1
+        aux_arr[i] = DataFrame(ПУМАК = 1:nrows(arreglo[i]))
         if tamanio < size(arreglo[count],1)
             tamanio = size(arreglo[count],1)
         end
     end
 
     for i in 1:size(archivos,1), j in names(arreglo[i]), k in columnas
-            
         if(j==k)
-             arreglo[i] = select(arreglo[i], Symbol(j))   
+            aux_arr[i] = hcat(aux_arr[i],select(arreglo[i], Symbol(j)),makeunique=true)
         end
-        if(j!=k)
-             select!(arreglo[i], Not(Symbol(j)))   
-        end
+    end
+        
+    for i in 1:size(aux_arr,1)
+        select!(aux_arr[i], Not("ПУМАК"))
     end
 
 
