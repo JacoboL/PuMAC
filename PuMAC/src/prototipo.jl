@@ -11,7 +11,7 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
 
     for i in archivos
         arreglo[count] = DataFrame(CSV.File(i))
-        aux_arr[count] = DataFrame(ПУМАК = 1:nrows(arreglo[count]))
+        aux_arr[count] = DataFrame(ПУМАК = 1:nrow(arreglo[count]))
         if tamanio < size(arreglo[count],1)
             tamanio = size(arreglo[count],1)
         end
