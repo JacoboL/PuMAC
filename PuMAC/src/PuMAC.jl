@@ -1,7 +1,7 @@
 module PuMAC
 
 # Write your package code here.
-include("prototipo.jl")
+include("fuciones.jl")
 
 export con_archivos
 export con_carpeta
