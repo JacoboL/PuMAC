@@ -67,7 +67,8 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
     # Se exporta al tipo de archivo deseado
     if(lowercase(exportto) == "csv")
         CSV.write(nombre_archivo , df_nuevo)
-#######println("el archivo se guardo en", joinpath(pwd(), nombre_ruta))
+        print("el archivo se guardo en: ")
+        println( joinpath( pwd(), nombre_ruta))
     else  if(lowercase(exportto) == "jld")
         #exportar a jld
     end
