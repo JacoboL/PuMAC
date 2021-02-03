@@ -1,6 +1,7 @@
 using CSV
 using DataFrames
 using JLD
+using FileIO
 
 function concatenador(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
 
@@ -15,6 +16,10 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
     end
     
     if(size(columnas,1) < 1)
+        error("Pon las columnas que quieres extraer, debe de ser un arreglo de tipo String")
+    end
+        
+    if(contains(nombre_archivo, ".csv") || contains(nombre_archivo, ".jld"))
         error("Pon las columnas que quieres extraer, debe de ser un arreglo de tipo String")
     end
     
@@ -70,7 +75,9 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
         print("el archivo se guardo en: ")
         println( joinpath( pwd(), nombre_ruta))
     else  if(lowercase(exportto) == "jld")
-        #exportar a jld
+        save(joinpath(pwd(), nombre_ruta), "df", df_nuevo)
+        print("el archivo se guardo en: ")
+        println( joinpath( pwd(), nombre_ruta))
     end
       
     return df_nuevo
