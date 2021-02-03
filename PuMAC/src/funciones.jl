@@ -12,7 +12,8 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
     
     for i in archivos
         if(contains(i, ".csv"))
-        error("Algun archivo no es csv o esta mal escrito, asegurarse que sea de la forma [\"Archivo_1.csv\", \"Archivo_2.csv\", ...]")
+            error("Algun archivo no es csv o esta mal escrito, asegurarse que sea de la forma [\"Archivo_1.csv\", \"Archivo_2.csv\", ...]")
+        end
     end
     
     if(size(columnas,1) < 1)
@@ -70,7 +71,7 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
         CSV.write(nombre_archivo , df_nuevo)
         print("el archivo se guardo en: ")
         println( joinpath( pwd(), nombre_ruta))
-    else  if(contains(nombre_archivo, ".jld"))
+    elseif(contains(nombre_archivo, ".jld"))
         save(joinpath(pwd(), nombre_ruta), "df", df_nuevo)
         print("el archivo se guardo en: ")
         println( joinpath( pwd(), nombre_ruta))
