@@ -3,7 +3,7 @@ using DataFrames
 using JLD
 using FileIO
 
-function concatenador(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
+function concatenador(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String = "new_PuMAC.csv", faltantes::Bool = true)
 
     # Asegurando que los valores introducidos sean los esperados
     if(size(archivos,1) < 1)
@@ -20,11 +20,7 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
     end
         
     if(contains(nombre_archivo, ".csv") || contains(nombre_archivo, ".jld"))
-        error("Pon las columnas que quieres extraer, debe de ser un arreglo de tipo String")
-    end
-    
-    if(lowercase(exportto) != "csv" || lowercase(exportto) != "jld" || lowercase(exportto) != "no" )
-        error("No se puede exportar al tipo de archivo $exportto, las opciones son: no, csv o jld")
+        error("El nombre del archivo necesita tener el tipo de archivo o tipo de archivo no soportado")
     end
     
     # Se declara un arreglo con la misma cantidad de espacio que la cantidad de archivos pasados por el usuario  
@@ -70,11 +66,11 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
     select!(df_nuevo, Not("ПУМАК"))
 
     # Se exporta al tipo de archivo deseado
-    if(lowercase(exportto) == "csv")
+    if(contains(nombre_archivo, ".csv"))
         CSV.write(nombre_archivo , df_nuevo)
         print("el archivo se guardo en: ")
         println( joinpath( pwd(), nombre_ruta))
-    else  if(lowercase(exportto) == "jld")
+    else  if(contains(nombre_archivo, ".jld"))
         save(joinpath(pwd(), nombre_ruta), "df", df_nuevo)
         print("el archivo se guardo en: ")
         println( joinpath( pwd(), nombre_ruta))
