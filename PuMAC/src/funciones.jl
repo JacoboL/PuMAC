@@ -57,7 +57,7 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
             end
         
             # Se agrega la columna x al DataFrame
-            df_nuevo = hcat(df_nuevo, x, makeunique=true)
+            df_nuevo = hcat(df_nuevo, DataFrame(Symbol(k) => x), makeunique=true)
         end
     end
     
