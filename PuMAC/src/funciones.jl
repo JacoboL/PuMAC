@@ -11,14 +11,14 @@ function concatenador(archivos::Array{String,undef}, columnas::Array{String,unde
     
     for i in archivos
         if(contains(i, ".csv"))
-        error("Algun archivo no es csv o esta mal escrito, asegurarse que se vea como [\"Archivo_1.csv\", \"Archivo_2.csv\", ...]")
+        error("Algun archivo no es csv o esta mal escrito, asegurarse que sea de la forma [\"Archivo_1.csv\", \"Archivo_2.csv\", ...]")
     end
     
     if(size(columnas,1) < 1)
         error("Pon las columnas que quieres extraer, debe de ser un arreglo de tipo String")
     end
     
-    if(lowercase(exportto) != "csv" || lowercase(exportto) != "jld" ||lowercase(exportto) != "no" )
+    if(lowercase(exportto) != "csv" || lowercase(exportto) != "jld" || lowercase(exportto) != "no" )
         error("No se puede exportar al tipo de archivo $exportto, las opciones son: no, csv o jld")
     end
     
