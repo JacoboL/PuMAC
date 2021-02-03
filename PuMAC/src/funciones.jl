@@ -2,11 +2,27 @@ using CSV
 using DataFrames
 using JLD
 
-function con_archivos(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, ruta::String = homedir(), exportto::String = "csv", faltantes::Bool = true)
+function concatenador(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
 
+    # Asegurando que los valores introducidos sean los esperados
+    if(size(archivos,1) < 1 #=||  archivos no son csv=#)
+        error("Pon archivos csv para extraer, debe de ser un arreglo de tipo String")
+    end
+    
+    if(size(columnas,1) < 1)
+        error("Pon las columnas que quieres extraer, debe de ser un arreglo de tipo String")
+    end
+    
+    if(lowercase(exportto) != "csv" || lowercase(exportto) != "jld" ||lowercase(exportto) != "no" )
+        error("No se puede exportar al tipo de archivo $exportto, las opciones son: no, csv o jld")
+    end
+    
+    # Se declara un arreglo con la misma cantidad de espacio que la cantidad de archivos pasados por el usuario  
     arreglo = Array{DataFrame}(undef,size(archivos,1))
     tamanio = 0
 
+    # Se extraen todos los archivos csv como DataFrames y se guardan en el arreglo, 
+    # tambien se obtiene la dimension del DataFrame mas grande
     for i in 1:size(archivos,1)
         arreglo[i] = DataFrame(CSV.File(archivos[i]))
         if tamanio < size(arreglo[i],1)
@@ -14,42 +30,50 @@ function con_archivos(archivos::Array{String,undef}, columnas::Array{String,unde
         end
     end
 
+    # Se declara un Dataframe con la misma cardinalidad del DataFrame mas grande
     df_nuevo = DataFrame(ПУМАК = 1:tamanio)
 
-for i in 1:size(archivos,1), j in 1:size(names(arreglo[i]),1), k in columnas
-    if (k == names(arreglo[i])[j])
-        x = arreglo[i][:,k]
-        x = convert(Array{Any,1}, x)
+    for i in 1:size(archivos,1), j in 1:size(names(arreglo[i]),1), k in columnas
+        # Se obtienen solo las columnas deseadas por el usuario
+        if (k == names(arreglo[i])[j])
+            # Se asigna a x con los calores de la columna deseada por el usuario
+            x = arreglo[i][:,k]
+            # Se convierte a x en tipo Any
+            x = convert(Array{Any,1}, x)
         
-        if(nrow(arreglo[i]) < tamanio)
-            if faltantes
-                append!(x, Array{Missing}(undef, tamanio-nrow(arreglo[i])))
-            else
-                append!(x, zeros(tamanio-nrow(arreglo[i])))
+            # Se normalizan filas de DataFrames con cardinalidad menor que la mas grande,
+            # si faltantes es true entonces los valores faltantes se normalizaran con el valor de missing, de otro modo se normalizara con ceros
+            if(nrow(arreglo[i]) < tamanio)
+                if (faltantes)
+                    append!(x, Array{Missing}(undef, tamanio-nrow(arreglo[i])))
+                else
+                    append!(x, zeros(tamanio-nrow(arreglo[i])))
+                end
             end
+        
+            # Se agrega la columna x al DataFrame
+            df_nuevo = hcat(df_nuevo, x, makeunique=true)
         end
-        
-        df_nuevo = hcat(df_nuevo, x, makeunique=true)
     end
-end
-select!(df_nuevo, Not("ПУМАК"))
+    
+    # Se retira la columna auxiliar "ПУМАК" del DataFrame
+    select!(df_nuevo, Not("ПУМАК"))
 
+    # Se exporta al tipo de archivo deseado
     if(lowercase(exportto) == "csv")
-        
         CSV.write(nombre_archivo , df_nuevo)
-            
-        println("el archivo se guardo en", joinpath(homedir(), nombre_ruta))
+#######println("el archivo se guardo en", joinpath(pwd(), nombre_ruta))
     else  if(lowercase(exportto) == "jld")
         #exportar a jld
-    else
-        error("no se puede exportar al tipo de archivo $exportto")
     end
       
-    
     return df_nuevo
 end
 
-function con_carpeta(carpeta::String, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
+function concatenador(carpeta::String, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
+    # Se extraen los archivos de tipo csv de la carpeta
     cd(carpeta)
     archivos = filter(x->endswith(x, ".csv"), readdir())
+    
+    concatenador(archivos, columnas, nombre_archivo, exportto, faltantes)
 end
