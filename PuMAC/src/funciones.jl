@@ -5,8 +5,13 @@ using JLD
 function concatenador(archivos::Array{String,undef}, columnas::Array{String,undef}, nombre_archivo::String, exportto::String = "csv", faltantes::Bool = true)
 
     # Asegurando que los valores introducidos sean los esperados
-    if(size(archivos,1) < 1 #=||  archivos no son csv=#)
+    if(size(archivos,1) < 1)
         error("Pon archivos csv para extraer, debe de ser un arreglo de tipo String")
+    end
+    
+    for i in archivos
+        if(contains(i, ".csv"))
+        error("Algun archivo no es csv o esta mal escrito, asegurarse que se vea como [\"Archivo_1.csv\", \"Archivo_2.csv\", ...]")
     end
     
     if(size(columnas,1) < 1)
