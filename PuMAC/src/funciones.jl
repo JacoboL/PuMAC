@@ -6,7 +6,7 @@ function unir(archivos::Array{String,undef}, columnas::Array{String,undef}, nomb
     if(size(archivos,1) < 1)
         error("Pon archivos csv para extraer, debe de ser un arreglo de tipo String")
     end
-    
+    #=
     for i in archivos
         if(contains(i, ".csv"))
             error("Algun archivo no es csv o esta mal escrito, asegurarse que sea de la forma [\"Archivo_1.csv\", \"Archivo_2.csv\", ...]")
@@ -14,15 +14,15 @@ function unir(archivos::Array{String,undef}, columnas::Array{String,undef}, nomb
             error("Algun archivo no es jld o esta mal escrito, asegurarse que sea de la forma [\"Archivo_1.jld\", \"Archivo_2.jld\", ...]")
         end
     end
-    
+    =#
     if(size(columnas,1) < 1)
         error("Pon las columnas que quieres extraer, debe de ser un arreglo de tipo String")
     end
-        
+       #=
     if(!contains(nombre_archivo, ".jld"))
         error("El String que contiene al archivo necesita tener el tipo de archivo especificado o tipo de archivo no soportado")
     end
-    
+    =#
     # Se declara un arreglo con la misma cantidad de espacio que la cantidad de archivos pasados por el usuario  
     arreglo = Array{DataFrame}(undef,size(archivos,1))
     tamanio = 0
